@@ -6,22 +6,17 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
-        // Navigation View for Assignment 1 Task 6
-        NavigationView {
-            HStack {
-                ForEach(viewModel.cards) { card in
-                    CardView(card: card).onTapGesture {
-                        self.viewModel.choose(card: card)
-                    }
-                }
-                .aspectRatio(2/3, contentMode: .fit)
+        Grid(viewModel.cards) { card in
+            CardView(card: card).onTapGesture {
+                self.viewModel.choose(card: card)
             }
+        .padding(5)
+        }
             .foregroundColor(Color.orange)
             .padding()
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -48,7 +43,9 @@ struct CardView: View {
                     .stroke(lineWidth: edgeLineWidth)
                 Text(card.content)
             } else {
-                RoundedRectangle(cornerRadius: cornerRadius).fill()
+                if !card.isMatched {
+                    RoundedRectangle(cornerRadius: cornerRadius).fill()
+                }
             }
         }
         .font(Font.system(size: fontSize(for: size)))
