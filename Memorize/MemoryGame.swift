@@ -10,7 +10,7 @@ import Foundation
 
 // equatable means that == is implemented for the type
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    var cards: Array<Card>
+    private(set) var cards: Array<Card> // reading it is allowed
     // [Int]() declares an array of ints
     // optionals are automatically initialized to nil
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
